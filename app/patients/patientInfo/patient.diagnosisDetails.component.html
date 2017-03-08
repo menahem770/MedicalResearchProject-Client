@@ -1,0 +1,36 @@
+<h1>{{pageTitle}}</h1>
+<tabs>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form [formGroup]="formGroup">
+                        <tabs>
+                            <tab *ngFor="let group of formModel" [tabTitle]="group.legend || 'Tab '+i">
+                                <dynamic-form-bootstrap-control *ngFor="let controlModel of [group]"
+                                    [controlGroup]="formGroup"
+                                    [model]="controlModel"
+                                    (change)="onChange($event)">
+                                </dynamic-form-bootstrap-control>
+                            </tab>
+                            <!--<tab [tabTitle]="'first tab'">
+                                <dynamic-form-bootstrap-control *ngFor="let controlModel of formModel"
+                                    [controlGroup]="formGroup"
+                                    [model]="controlModel"
+                                    (blur)="onBlur($event)"
+                                    (change)="onChange($event)"
+                                    (focus)="onFocus($event)">
+                                </dynamic-form-bootstrap-control>
+                            </tab>-->
+                                <!--<mrp-symptoms-tab [patient]='patient' [formGroup]='group' [formGroup]='formGroup' *ngIf='patient'>
+                                </mrp-symptoms-tab>-->
+                        </tabs>
+                        
+                        <button type="submit" class="btn btn-primary" (click)='submit()'>Save</button>
+                        <button type="button" class="btn btn-primary" (click)='goBack()'>Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>     
+</tabs>
