@@ -21,10 +21,10 @@ export class UsersService{
     emitChange(change: User) {
         this.emitChangeSource.next(change);
     }
-    
+
     constructor(private _http: Http){ }
 
-    loginSubmit(logInfo: LoginInfo): Observable<any> { 
+    loginSubmit(logInfo: LoginInfo): Observable<any> {
         let headers: Headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options: RequestOptions = new RequestOptions({ headers: headers });
         let body: string = "userName="+logInfo.Username+"&password="+logInfo.Password+"&grant_type=password";
@@ -57,10 +57,10 @@ export class UsersService{
     logout(): void {
         sessionStorage.removeItem('token');
     }
-    
+
     private _handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'server error');
     }
-    
+
 }
