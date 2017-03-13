@@ -38,7 +38,25 @@
             </div>
         </div>
         <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
-        
+    </div>
+    <div class="panel-footer">
+        <a class="btn btn-default" style="width:auto" [routerLink]="['/findPatient']">
+            <i class="glyphicon glyphicon-chevron-left"></i> Back
+        </a>
+        <a class="btn btn-primary" style="width:auto;margin-left:10px" [routerLink]="['/patientEdit/1']">
+            <i class="glyphicon glyphicon-edit"></i> Edit
+        </a>
+        <a class="btn btn-primary" style="width:auto;margin-left:10px" [routerLink]="['/patientDiagnosisDetails/0']">
+            <i class="glyphicon glyphicon-plus"></i> Add Diagnosis
+        </a>
+    </div>
+</div>
+<div class="panel panel-primary" *ngIf="patient">
+    <div class="panel-heading" style="font-size:large">
+        {{pageTitle + ": " + patient.Name}}
+    </div>
+
+    <div class="panel-body">
         <div class="panel panel-default">
             <div class="panel-heading">Diagnosis List</div>
             <div class="row">
@@ -93,7 +111,7 @@
                 <tbody>
                     <tr *ngFor="let diag of patient.Diagnosis;let i=index">
                         <td>
-                            <button (click)="openDetails(i)" class="btn btn-primary">Details</button>
+                            <button (click)="openDetails(i+1)" class="btn btn-primary">Details</button>
                         </td>
                         <td>{{diag.DoctorName}}</td>
                         <td>{{diag.DiagnosisDate}}</td>
@@ -109,17 +127,5 @@
                 </tfoot>
             </table>
         </div>
-    </div>
-
-    <div class="panel-footer">
-        <a class="btn btn-default" style="width:auto" [routerLink]="['/findPatient']">
-            <i class="glyphicon glyphicon-chevron-left"></i> Back
-        </a>
-        <a class="btn btn-primary" style="width:auto;margin-left:10px" [routerLink]="['/patientEdit/1']">
-            <i class="glyphicon glyphicon-edit"></i> Edit
-        </a>
-        <a class="btn btn-primary" style="width:auto;margin-left:10px" [routerLink]="['/patientDiagnosisDetails/0']">
-            <i class="glyphicon glyphicon-plus"></i> Add Diagnosis
-        </a>
-    </div>
+    </div>        
 </div>

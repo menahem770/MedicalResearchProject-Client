@@ -1,5 +1,5 @@
 {
-  "name": "angular-quickstart",
+  "name": "medical-research-project",
   "version": "1.0.0",
   "description": "QuickStart package.json from the documentation, supplemented with testing support",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT",
+  "license": "Sela International Labs",
   "dependencies": {
     "@angular/common": "~2.4.0",
     "@angular/compiler": "~2.4.0",

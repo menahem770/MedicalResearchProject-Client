@@ -10,7 +10,6 @@ import {
 } from "@ng2-dynamic-forms/core";
 
 import { UsersService } from './../../shared/services/users.service';
-import { SymptomsTabComponent } from './symptomsTab.component';
 import { PatientsFormSchemaService } from './../../shared/services/patientsFormSchema.service';
 import { PatientsService } from '../../shared/services/patients.service';
 import { Patient } from '../../shared/patient';
@@ -25,6 +24,7 @@ import { PatientDiagnosis } from '../../shared/patientDiagnosis';
 export class PatientDiagnosisDetailsComponent implements OnInit {
     disable: string = "";
     pageTitle: string;
+    formType: string;
     diagnosis: PatientDiagnosis;
     patient: Patient;
     formModel: Array<DynamicFormControlModel>;
@@ -40,17 +40,18 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
         private formsSchemaService: PatientsFormSchemaService,
         private formsService:DynamicFormService) { }
     ngOnInit(): void {
-        this.patientsService.changeEmitted$.subscribe(patient => this.patient = patient)
-        //this.formsSchemaService.SaveFirstSchema().subscribe(res => res);
         this.formsSchemaService.GetFirstSchema().subscribe(res => {
             this.formModel = this.formsService.fromJSON(res);
             this.formGroup = this.formsService.createFormGroup(this.formModel);
-            // this.formGroup.forEach(element => {
-                
-            // });
+            this.patientsService.changeEmitted$.subscribe(patient => {
+                this.patient = patient;
+                this.determineFormType();
+                if(this.formType == "E" && this.diagnosis.Symptoms){
+                    this.formGroup.get(["bootstrapFormGroup1"]).patchValue(this.diagnosis.Symptoms);
+                }
+            })
         })
         this.determineFormType();
-
     }
     submit(): void {
         this.diagnosis.PatientId = this.patient.PatientId;
@@ -62,17 +63,17 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
     }
     private determineFormType():void{
         let id = +this.route.snapshot.params['id'];
-        this.patientsService.changeEmitted$.subscribe(patient => this.patient = patient);
-        if (id >= 1 && this.patient.Diagnosis && this.patient.Diagnosis.length > id) {
-            this.diagnosis = this.patient.Diagnosis[id];
+        if (id >= 1 && this.patient.Diagnosis && this.patient.Diagnosis.length >= id) {
+            this.diagnosis = this.patient.Diagnosis[id-1];
             this.pageTitle = 'Edit Diagnosis for ' + this.patient.Name;
             this.disable = 'disabled';
+            this.formType = 'E';
         }
         else {
             this.diagnosis = new PatientDiagnosis(this.patient.PatientId);
-            this.diagnosis.PatientId = this.patient.PatientId;
             this.patient.Diagnosis.push(this.diagnosis);
             this.pageTitle = 'new Diagnosis for ' + this.patient.Name;
+            this.formType = 'A';
         }
     }
 
