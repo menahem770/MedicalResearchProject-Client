@@ -1,3 +1,4 @@
+import { TabsComponent } from './tabs.component';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -12,4 +13,8 @@ import { Component, Input } from '@angular/core';
 export class TabComponent {
   @Input('tabTitle') title: string;
   @Input() active = false;
+
+  constructor(tabs:TabsComponent) {
+    tabs.addTab(this);
+  }
 }

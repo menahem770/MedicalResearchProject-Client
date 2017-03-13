@@ -1,4 +1,4 @@
-import { Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, ContentChildren, QueryList, AfterContentInit, forwardRef } from '@angular/core';
 import { TabComponent } from './tab.component';
 
 @Component({
@@ -15,22 +15,30 @@ import { TabComponent } from './tab.component';
 })
 export class TabsComponent implements AfterContentInit {
   
-  @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
+  //@ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
+  tabs: TabComponent[] = [];
   
   // contentChildren are set
   ngAfterContentInit() {
     // get all active tabs
-    let activeTabs = this.tabs.filter((tab)=>tab.active);
+    //let activeTabs = this.tabs.filter((tab)=>tab.active);
     
     // if there is no active tab set, activate the first
-    if(this.tabs.length > 0 && activeTabs.length === 0) {
-      this.selectTab(this.tabs.first);
+    // if(this.tabs.length > 0 && activeTabs.length === 0) {
+    //   this.selectTab(this.tabs[0]);
+    // }
+  }
+
+  addTab(tab: TabComponent) {
+    if (this.tabs.length === 0) {
+      tab.active = true;
     }
+    this.tabs.push(tab);
   }
   
   selectTab(tab: TabComponent){
     // deactivate all tabs
-    this.tabs.toArray().forEach(tab => {
+    this.tabs.forEach(tab => {
       tab.active = false;
     });
     

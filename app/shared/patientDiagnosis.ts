@@ -10,10 +10,10 @@ export class PatientDiagnosis{
     DischargeDate: Date;
     InclusionDate: Date;
     General: string;
-    Symptoms: {Key:string,Symptom:SymptomInfo}[];
+    Symptoms: {Key:string,Symptom:any}[];
 
-    constructor(patientId:string){
-        this.PatientId = patientId;
+    constructor(id:string){
+        this.PatientId = id;
         this.Symptoms = new Array();
     }
     fromJSON(json:Object) {
@@ -23,24 +23,24 @@ export class PatientDiagnosis{
     }
 }
 
-export class SymptomInfo{
-    SymptomName:string;
-    BoolValue:boolean;
-    StringValue:string;
-    NumberValue:number;
-    DateValue:Date;
+// export class SymptomInfo{
+//     SymptomName:string;
+//     BoolValue:boolean;
+//     StringValue:string;
+//     NumberValue:number;
+//     DateValue:Date;
 
-    constructor(name:string,bool:boolean,str:string,num:number,date:Date){
-        this.SymptomName = name;
-        if(bool) this.BoolValue = bool;
-        if(str) this.StringValue = str;
-        if(num) this.NumberValue = num;
-        if(date) this.DateValue = date;
-    }
+//     constructor(name:string,bool:boolean,str:string,num:number,date:Date){
+//         this.SymptomName = name;
+//         if(bool) this.BoolValue = bool;
+//         if(str) this.StringValue = str;
+//         if(num) this.NumberValue = num;
+//         if(date) this.DateValue = date;
+//     }
 
-    fromJSON(json:Object) {
-        for (var propName in json)
-            this[propName] = json[propName];
-        return this;
-    }
-}
+//     fromJSON(json:Object) {
+//         for (var propName in json)
+//             this[propName] = json[propName];
+//         return this;
+//     }
+// }

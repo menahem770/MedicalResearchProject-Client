@@ -25,6 +25,7 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
     disable: string = "";
     pageTitle: string;
     formType: string;
+    error: string;
     diagnosis: PatientDiagnosis;
     patient: Patient;
     formModel: Array<DynamicFormControlModel>;
@@ -38,7 +39,8 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
         private route: ActivatedRoute,
         private patientsService: PatientsService,
         private formsSchemaService: PatientsFormSchemaService,
-        private formsService:DynamicFormService) { }
+        private formsService:DynamicFormService) {}
+
     ngOnInit(): void {
         this.formsSchemaService.GetFirstSchema().subscribe(res => {
             this.formModel = this.formsService.fromJSON(res);
@@ -51,76 +53,80 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
                 }
             })
         })
-        this.determineFormType();
     }
+
     submit(): void {
-        this.diagnosis.PatientId = this.patient.PatientId;
-        this.patientsService.addDiagnosis(this.diagnosis);
-        this.goBack();
+        if (this.formType == 'E'){
+            this.patientsService.editDiagnosis(this.diagnosis).subscribe((res:any) => <boolean>res ? this.goBack() : "",(error:any) => this.error = error);
+        }
+        else{
+            this.patient.Diagnosis.push(this.diagnosis);
+            this.patientsService.addDiagnosis(this.diagnosis).subscribe((res:any) => <boolean>res ? this.goBack() : "",(error:any) => this.error = error);
+        }
     }
+
     goBack(): void {
         this.router.navigate(['./patientInfo/1']);
     }
+
     private determineFormType():void{
         let id = +this.route.snapshot.params['id'];
-        if (id >= 1 && this.patient.Diagnosis && this.patient.Diagnosis.length >= id) {
+        if (id <= 0 || !(this.patient && this.patient.Diagnosis && this.patient.Diagnosis.length >= id)){
+            this.diagnosis = new PatientDiagnosis(this.patient.PatientId);
+            this.pageTitle = 'new Diagnosis for ' + this.patient.Name;
+            this.formType = 'A';
+        }
+        else {
             this.diagnosis = this.patient.Diagnosis[id-1];
             this.pageTitle = 'Edit Diagnosis for ' + this.patient.Name;
             this.disable = 'disabled';
             this.formType = 'E';
         }
-        else {
-            this.diagnosis = new PatientDiagnosis(this.patient.PatientId);
-            this.patient.Diagnosis.push(this.diagnosis);
-            this.pageTitle = 'new Diagnosis for ' + this.patient.Name;
-            this.formType = 'A';
-        }
+    }
+
+    onChange($event:any) {
+        this.diagnosis.Symptoms[$event.model.id] = $event.model._value;
     }
 
 
 
 
+    // add() {
+    //     this.formsService.addFormArrayGroup(this.arrayControl, this.arrayModel);
+    // }
 
-    add() {
-        this.formsService.addFormArrayGroup(this.arrayControl, this.arrayModel);
-    }
+    // insert(context: DynamicFormArrayModel, index: number) {
+    //     this.formsService.insertFormArrayGroup(index, this.arrayControl, context);
+    // }
 
-    insert(context: DynamicFormArrayModel, index: number) {
-        this.formsService.insertFormArrayGroup(index, this.arrayControl, context);
-    }
+    // remove(context: DynamicFormArrayModel, index: number) {
+    //     this.formsService.removeFormArrayGroup(index, this.arrayControl, context);
+    // }
 
-    remove(context: DynamicFormArrayModel, index: number) {
-        this.formsService.removeFormArrayGroup(index, this.arrayControl, context);
-    }
+    // move (context: DynamicFormArrayModel, index: number, step: number) {
+    //     this.formsService.moveFormArrayGroup(index, step, this.arrayControl, context);
+    // }
 
-    move (context: DynamicFormArrayModel, index: number, step: number) {
-        this.formsService.moveFormArrayGroup(index, step, this.arrayControl, context);
-    }
+    // clear() {
+    //     this.formsService.clearFormArray(this.arrayControl, this.arrayModel);
+    // }
 
-    clear() {
-        this.formsService.clearFormArray(this.arrayControl, this.arrayModel);
-    }
-
-    test() {
-        //this.exampleModel.disabledUpdates.next(!this.exampleModel.disabled);
-        //this.exampleModel.valueUpdates.next("Hello Hello");
-        //console.log(JSON.stringify(this.exampleModel));
-        //this.arrayModel.get(1).group[0].valueUpdates.next("This is just a test");
-        //this.formsService.moveFormArrayGroup(2, -1, this.arrayControl, this.arrayModel);
-        this.formsService.removeFormGroupControl(
-            1,
-            this.formGroup.get("bootstrapFormGroup1") as FormGroup,
-            this.formModel[0] as DynamicFormGroupModel
-        );
-    }
+    // test() {
+    //     this.exampleModel.disabledUpdates.next(!this.exampleModel.disabled);
+    //     this.exampleModel.valueUpdates.next("Hello Hello");
+    //     console.log(JSON.stringify(this.exampleModel));
+    //     this.arrayModel.get(1).group[0].valueUpdates.next("This is just a test");
+    //     this.formsService.moveFormArrayGroup(2, -1, this.arrayControl, this.arrayModel);
+    //     this.formsService.removeFormGroupControl(
+    //         1,
+    //         this.formGroup.get("bootstrapFormGroup1") as FormGroup,
+    //         this.formModel[0] as DynamicFormGroupModel
+    //     );
+    // }
 
     // onBlur($event:any) {
     //     console.log(`BLUR event on ${$event.model.id}: `, $event);
     // }
-
-    onChange($event:any) {
-        console.log(`CHANGE event on ${$event.model.id}: `, $event);
-    }
 
     // onFocus($event:any) {
     //     console.log(`FOCUS event on ${$event.model.id}: `, $event);

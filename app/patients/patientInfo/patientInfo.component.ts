@@ -26,6 +26,7 @@ export class PatientInfoComponent {
         this.patientsService.changeEmitted$.subscribe(patient => {
             this.patient = patient;
             this.showDiagnosis = patient && patient.Diagnosis && patient.Diagnosis.length > 0;
+            //this.addDiagnosisTemp();
         });
     }
     
@@ -48,22 +49,22 @@ export class PatientInfoComponent {
         diag.DoctorName = "me";
         diag.General = "still healthy";
         (diag.MedicalInstitution = new MedicalInstitution()).Name = "shiba";
-        diag.Symptoms.push({Key:"InclusionDate",Symptom:new SymptomInfo("InclusionDate",null,null,null,new Date())});
-        diag.Symptoms.push({Key:"PatientCode",Symptom:new SymptomInfo("PatientCode",null,this.patient.Name[0],null,null)});
-        diag.Symptoms.push({Key:"Age",Symptom:new SymptomInfo("Age",null,null,new Date().getFullYear()-1986,null)});
-        diag.Symptoms.push({Key:"WaistCircumference",Symptom:new SymptomInfo("WaistCircumference",null,null,110,null)});
-        diag.Symptoms.push({Key:"ConcomitantTherapy",Symptom:new SymptomInfo("ConcomitantTherapy",null,"not specified",null,null)});
-        diag.Symptoms.push({Key:"Corticosteroids",Symptom:new SymptomInfo("Corticosteroids",null,"yes",null,null)});
-        diag.Symptoms.push({Key:"NSAID",Symptom:new SymptomInfo("NSAID",null,"no",null,null)});
-        diag.Symptoms.push({Key:"Antiplatelets",Symptom:new SymptomInfo("Antiplatelets",null,"yes",null,null)});
-        diag.Symptoms.push({Key:"AntiplateletsDiscontinuedOnAnticoagulantTherapy",Symptom:new SymptomInfo("AntiplateletsDiscontinuedOnAnticoagulantTherapy",false,null,null,null)});
-        diag.Symptoms.push({Key:"Psychotropics",Symptom:new SymptomInfo("Psychotropics",null,"not specified",null,null)});
-        diag.Symptoms.push({Key:"SpecifyDrugs",Symptom:new SymptomInfo("SpecifyDrugs",null,"bal bla",null,null)});
-        diag.Symptoms.push({Key:"Erythropoietin",Symptom:new SymptomInfo("Erythropoietin",null,"no",null,null)});
-        diag.Symptoms.push({Key:"Statins",Symptom:new SymptomInfo("Statins",null,"no",null,null)});
-        diag.Symptoms.push({Key:"Drug",Symptom:new SymptomInfo("Drug",null,null,null,null)});
-        diag.Symptoms.push({Key:"Dose/Day",Symptom:new SymptomInfo("Dose/Day",null,null,50,null)});
-        diag.Symptoms.push({Key:"Other",Symptom:new SymptomInfo("Other",null,"lorem ipsum kjnsdmfnbal ;kashdfgm,n  as;dgkns g;askhas bgd dfasdf",null,null)});
+        diag.Symptoms.push({Key:"InclusionDate",Symptom:new Date()});
+        diag.Symptoms.push({Key:"PatientCode",Symptom:this.patient.Name[0]});
+        diag.Symptoms.push({Key:"Age",Symptom:new Date().getFullYear()-1986});
+        diag.Symptoms.push({Key:"WaistCircumference",Symptom:110});
+        diag.Symptoms.push({Key:"ConcomitantTherapy",Symptom:"not specified"});
+        diag.Symptoms.push({Key:"Corticosteroids",Symptom:"yes"});
+        diag.Symptoms.push({Key:"NSAID",Symptom:"no"});
+        diag.Symptoms.push({Key:"Antiplatelets",Symptom:"yes"});
+        diag.Symptoms.push({Key:"AntiplateletsDiscontinuedOnAnticoagulantTherapy",Symptom:false});
+        diag.Symptoms.push({Key:"Psychotropics",Symptom:"not specified"});
+        diag.Symptoms.push({Key:"SpecifyDrugs",Symptom:"bal bla"});
+        diag.Symptoms.push({Key:"Erythropoietin",Symptom:"no"});
+        diag.Symptoms.push({Key:"Statins",Symptom:"no"});
+        diag.Symptoms.push({Key:"Drug",Symptom:null});
+        diag.Symptoms.push({Key:"Dose/Day",Symptom:50});
+        diag.Symptoms.push({Key:"Other",Symptom:"lorem ipsum kjnsdmfnbal ;kashdfgm,n  as;dgkns g;askhas bgd dfasdf"});
         this.patient.Diagnosis.push(diag);
         this.patientsService.addDiagnosis(diag).subscribe();
     }
