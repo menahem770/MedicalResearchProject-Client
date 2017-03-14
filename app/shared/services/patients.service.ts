@@ -43,8 +43,8 @@ export class PatientsService{
         let accessToken:string = JSON.parse(sessionStorage.getItem('token')).token;
         let headers: Headers = new Headers({'Authorization':'Bearer '+accessToken});
         let options: RequestOptions = new RequestOptions({headers: headers});
-        return this._http.put(this._url+"/AddDiagnosis",diagnosis,options)
-            .map((res:Response) => res.json())
+        return this._http.post(this._url+"/AddDiagnosis",diagnosis,options)
+            .map((res:Response) => res)
             .catch(this._handleError);
     }
 
@@ -62,7 +62,7 @@ export class PatientsService{
         let headers: Headers = new Headers({'Authorization':'Bearer '+accessToken});
         let options: RequestOptions = new RequestOptions({headers: headers});
         return this._http.put(this._url+"/EditDiagnosis",diagnosis,options)
-            .map((res:Response) => res.json())
+            .map((res:Response) => res)
             .catch(this._handleError);
     }
 

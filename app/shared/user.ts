@@ -7,7 +7,7 @@ export class User{
     FullName: string;
     EmailAddress: string;
     ContactInfo: string;
-    DateOfBirth: Date;
+    DateOfBirth: Date = null;
     LicenceId: string;
     Rolse: string[];
     Institutions: MedicalInstitution[]

@@ -1,5 +1,5 @@
 export class MedicalInstitution{
-    Id:string;
+    Id:number;
     Name:string;
 
     fromJSON(json:Object) {

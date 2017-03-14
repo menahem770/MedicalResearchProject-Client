@@ -1,20 +1,19 @@
 import { MedicalInstitution } from './medicalInstitution';
 export class PatientDiagnosis{
-    Id:string;
+    Id:number;
     PatientId: string;
     DoctorId: string;
     DoctorName: string;
-    MedicalInstitution: MedicalInstitution;
+    MedicalInstitution: MedicalInstitution = new MedicalInstitution();
     InOutPatient: boolean;
-    DiagnosisDate: Date;
-    DischargeDate: Date;
-    InclusionDate: Date;
+    DiagnosisDate: Date = null;
+    DischargeDate: Date = null;
+    InclusionDate: Date = null;
     General: string;
-    Symptoms: {Key:string,Symptom:any}[];
+    Symptoms: {[Key:string]:any} = {};
 
-    constructor(id:string){
-        this.PatientId = id;
-        this.Symptoms = new Array();
+    constructor(pid:string){
+        this.PatientId = pid;
     }
     fromJSON(json:Object) {
         for (var propName in json)
@@ -22,25 +21,3 @@ export class PatientDiagnosis{
         return this;
     }
 }
-
-// export class SymptomInfo{
-//     SymptomName:string;
-//     BoolValue:boolean;
-//     StringValue:string;
-//     NumberValue:number;
-//     DateValue:Date;
-
-//     constructor(name:string,bool:boolean,str:string,num:number,date:Date){
-//         this.SymptomName = name;
-//         if(bool) this.BoolValue = bool;
-//         if(str) this.StringValue = str;
-//         if(num) this.NumberValue = num;
-//         if(date) this.DateValue = date;
-//     }
-
-//     fromJSON(json:Object) {
-//         for (var propName in json)
-//             this[propName] = json[propName];
-//         return this;
-//     }
-// }

@@ -41,13 +41,27 @@ export class PatientEditInfoComponent implements OnInit,OnDestroy {
         if (this.formType == "A") {
             this.patient.InclusionDate = new Date();
             this.patientService.addPatient(this.patient)
-                .subscribe((res: Response) => this.patientService.emitChange(this.patient[0]),
-                (error: any) => this.error = "Server Error, Patient wasn't saved!");
+                .subscribe((res: Response) => {
+                    if(res.status == 201){
+                        this.patientService.emitChange(this.patient[0]);
+                        this.onBack();
+                    }
+                    else
+                        this.error = "we're sorry, something is wrong with the information you entered!";
+                },(error: any) => this.error = "Server Error, Patient wasn't saved!");
         }
         else
             this.patientService.editPatient(this.patient)
-                .subscribe((error: any) => this.error = "Server Error, changes weren't saved!");
-        this.onBack();
+                .subscribe((res: Response) => {
+                    if(res.status == 200){
+                        let patient = new Patient().fromJSON(res.json());
+                        this.patientService.emitChange(patient);
+                        this.onBack();
+                    }
+                    else
+                        this.error = "we're sorry, something is wrong with the information you entered!";
+                },(error: any) => this.error = "Server Error, Patient wasn't saved!");
+        
     }
 
     onBack(): void {

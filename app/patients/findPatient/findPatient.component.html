@@ -15,7 +15,7 @@
                             <label for="name">Name</label>
                             <input type="string" class="form-control" id="name" [(ngModel)]="patient.name" (ngModelChange)="patient.name = $event" name="name">
                         </div>
-                        <h3 id='errorMsg' *ngIf='error != ""'>{{error}}</h3>
+                        <div class="alert alert-danger" *ngIf="error">{{error}}</div>
                         <button type="button" class="btn btn-primary" (click)='find()'>Find</button>
                     </form>
                 </div>

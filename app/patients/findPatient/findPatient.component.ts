@@ -25,10 +25,15 @@ export class FindPatientComponent{
     find():void{
         this.patientsService.getPatients(this.patient)
             .subscribe(response => {
-                let patient = new Patient().fromJSON(response[0]);
-                this.patientsService.emitChange(patient);
-                this.router.navigate(['./'+this.navigationAddress(patient)]);
-            });
+                if(response[0]){
+                    let patient = new Patient().fromJSON(response[0]);
+                    this.patientsService.emitChange(patient);
+                    this.router.navigate(['./'+this.navigationAddress(patient)]);
+                }
+            },error => {
+                console.log(error);
+                this.error = "server error!"
+            } );
     }
     
     private navigationAddress(patients:Patient):string{

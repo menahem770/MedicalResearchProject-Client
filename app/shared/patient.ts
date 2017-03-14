@@ -3,16 +3,13 @@ export class Patient{
     Id:string;
     PatientId:string;
     Name: string;
-    DateOfBirth: Date;
+    DateOfBirth: Date = null;
     Gender: Gender;
     Race: Race;
-    InclusionDate: Date;
+    InclusionDate: Date = null;
     General: string;
-    Diagnosis:PatientDiagnosis[];
+    Diagnosis:PatientDiagnosis[] = new Array<PatientDiagnosis>();
 
-    constructor(){
-        this.Diagnosis = new Array<PatientDiagnosis>();
-    }
     fromJSON(json:Object) {
         for (var propName in json)
             this[propName] = json[propName];
