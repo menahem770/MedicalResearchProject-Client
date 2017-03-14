@@ -4,7 +4,7 @@ import { PatientsService } from '../shared/services/patients.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '../shared/services/users.service';
-import { User } from './../shared/user';
+import { User } from './../shared/models/user';
 
 @Component({
     selector: 'mrp-main-app',

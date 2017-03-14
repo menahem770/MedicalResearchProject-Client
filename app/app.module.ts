@@ -21,9 +21,8 @@ import { PatientDiagnosisDetailsComponent } from './patients/patientInfo/patient
 import { FindPatientComponent } from './patients/findPatient/findPatient.component';
 import { CanActivateOAuthGuard } from './shared/services/canActivateOAuthGuard';
 import { DataFilterPipe } from './shared/components/dataFilter.pipe';
-//import { PatientInfoDiagnosisListComponent } from './patients/patientInfo/patientInfo.diagnosisList.component';
-//import { SymptomsTabComponent } from './patients/patientInfo/symptomsTab.component';
-//import { UnderConstructionComponent } from './shared/metronic/underConstruction.component';
+import { CanDeactivateDiagnosisFormGuard } from "./shared/services/canDeactivateFormEditGuard";
+
 
 @NgModule({
   imports:      [ BrowserModule,
@@ -41,7 +40,7 @@ import { DataFilterPipe } from './shared/components/dataFilter.pipe';
                     {path: 'passwordrecovery', redirectTo: 'login/2', pathMatch:'full'},
                     {path: 'patientInfo', component: PatientInfoComponent, canActivate : [CanActivateOAuthGuard]},
                     {path: 'patientEdit/:id', component: PatientEditInfoComponent, canActivate : [CanActivateOAuthGuard]},
-                    {path: 'patientDiagnosisDetails/:id', component: PatientDiagnosisDetailsComponent, canActivate : [CanActivateOAuthGuard]},
+                    {path: 'patientDiagnosisDetails/:id',component:PatientDiagnosisDetailsComponent,canActivate:[CanActivateOAuthGuard],canDeactivate:[CanDeactivateDiagnosisFormGuard]},
                     {path: 'findPatient', component: FindPatientComponent, canActivate : [CanActivateOAuthGuard]},
                     // {path: 'userManagment', component: UnderConstructionComponent, canActivate : [CanActivateOAuthGuard]},
                     // {path: 'research', component: UnderConstructionComponent, canActivate : [CanActivateOAuthGuard]},
@@ -63,12 +62,9 @@ import { DataFilterPipe } from './shared/components/dataFilter.pipe';
                   TabComponent,
                   TabsComponent,
                   EnumToOptionsFilter,
-                  DataFilterPipe,
-                  //SymptomsTabComponent,
-                  //PatientInfoDiagnosisListComponent,
-                  //UnderConstructionComponent,
+                  DataFilterPipe
                 ],
-  providers:    [CanActivateOAuthGuard],
+  providers:    [CanActivateOAuthGuard,CanDeactivateDiagnosisFormGuard],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

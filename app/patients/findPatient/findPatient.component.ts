@@ -1,15 +1,16 @@
 import { Router } from '@angular/router';
 import { Component, Input } from '@angular/core';
 
-import { UsersService } from './../../shared/services/users.service';
-import { Patient } from './../../shared/patient';
-import { User } from './../../shared/user';
+import { UsersService } from '../../shared/services/users.service';
+import { Patient } from '../../shared/models/patient';
+import { User } from '../../shared/models/user';
 import { PatientsService } from '../../shared/services/patients.service';
 import { FindPatientModel } from './findPatientModel';
 
 @Component({
     moduleId:module.id,
-    templateUrl:'./findPatient.component.html'
+    templateUrl:'./findPatient.component.html',
+    styleUrls:['./findPatient.component.css']
 })
 export class FindPatientComponent{
     patient:FindPatientModel = new FindPatientModel();

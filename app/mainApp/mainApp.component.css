@@ -17,6 +17,7 @@ li button{
 }
 #appTitle{
   padding-top: 16px;
+  margin-left:1px;
 }
 .navbar-brand>img {
   height: 100%;

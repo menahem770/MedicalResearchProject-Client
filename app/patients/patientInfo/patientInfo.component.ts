@@ -4,7 +4,7 @@ import { Component,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PatientsService } from './../../shared/services/patients.service';
-import { Patient, Race, Gender } from '../../shared/patient';
+import { Patient, Race, Gender } from '../../shared/models/patient';
 
 @Component({
     moduleId: module.id,

@@ -1,5 +1,5 @@
 import { Response } from '@angular/http';
-import { FormArray,FormGroup,FormControl } from '@angular/forms';
+import { FormArray, FormGroup, FormControl } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
@@ -13,8 +13,8 @@ import {
 import { UsersService } from './../../shared/services/users.service';
 import { PatientsFormSchemaService } from './../../shared/services/patientsFormSchema.service';
 import { PatientsService } from '../../shared/services/patients.service';
-import { Patient } from '../../shared/patient';
-import { PatientDiagnosis } from '../../shared/patientDiagnosis';
+import { Patient } from '../../shared/models/patient';
+import { PatientDiagnosis } from '../../shared/models/patientDiagnosis';
 
 @Component({
     selector: 'mrp-patient-diagnosis-details',
@@ -30,7 +30,7 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
     diagnosis: PatientDiagnosis;
     patient: Patient;
     formModel: Array<DynamicFormControlModel>;
-    formGroup:FormGroup = new FormGroup({});
+    formGroup: FormGroup = new FormGroup({});
     exampleControl: FormControl;
     exampleModel: DynamicInputModel;
     arrayControl: FormArray;
@@ -40,7 +40,7 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
         private route: ActivatedRoute,
         private patientsService: PatientsService,
         private formsSchemaService: PatientsFormSchemaService,
-        private formsService:DynamicFormService){}
+        private formsService: DynamicFormService) { }
 
     ngOnInit(): void {
         this.formsSchemaService.GetFirstSchema().subscribe(res => {
@@ -49,31 +49,33 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
             this.patientsService.changeEmitted$.subscribe(patient => {
                 this.patient = patient;
                 this.determineFormType();
-                if(this.formType == "E" && this.diagnosis.Symptoms){
-                    this.formGroup.get(["bootstrapFormGroup1"]).patchValue(this.diagnosis.Symptoms);
+                if (this.formType == "E" && this.diagnosis.Symptoms) {
+                    for (let key in this.formGroup.controls) {
+                        this.formGroup.controls[key].patchValue(this.diagnosis.Symptoms);
+                    }
                 }
             })
         })
     }
 
     submit(): void {
-        if (this.formType == 'E'){
-            this.patientsService.editDiagnosis(this.diagnosis).subscribe((res:Response) => {
-                if(res.status == 200){
+        if (this.formType == 'E') {
+            this.patientsService.editDiagnosis(this.diagnosis).subscribe((res: Response) => {
+                if (res.status == 200) {
                     let patient = new Patient().fromJSON(res.json());
                     this.patientsService.emitChange(patient);
                     this.goBack();
                 }
                 else
                     this.error = "we're sorry, something is wrong with the information you entered!";
-            },(error:any) => this.error = "server error!");
+            }, (error: any) => this.error = "server error!");
         }
-        else{
+        else {
             this.diagnosis.Id = this.patient.Diagnosis.length;
             this.patient.Diagnosis.push(this.diagnosis);
-            this.patientsService.addDiagnosis(this.diagnosis).subscribe((res:any) => {
+            this.patientsService.addDiagnosis(this.diagnosis).subscribe((res: any) => {
                 (<Response>res).status == 201 ? this.goBack() : "we're sorry, something is wrong with the information you entered!";
-            },(error:any) => this.error = "server error!");
+            }, (error: any) => this.error = "server error!");
         }
     }
 
@@ -81,22 +83,22 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
         this.router.navigate(['./patientInfo']);
     }
 
-    private determineFormType():void{
+    private determineFormType(): void {
         let id = +this.route.snapshot.params['id'];
-        if (id <= 0 || !(this.patient && this.patient.Diagnosis && this.patient.Diagnosis.length >= id)){
+        if (id <= 0 || !(this.patient && this.patient.Diagnosis && this.patient.Diagnosis.length >= id)) {
             this.diagnosis = new PatientDiagnosis(this.patient.PatientId);
             this.pageTitle = 'new Diagnosis for ' + this.patient.Name;
             this.formType = 'A';
         }
         else {
-            this.diagnosis = this.patient.Diagnosis[id-1];
+            this.diagnosis = this.patient.Diagnosis[id - 1];
             this.pageTitle = 'Edit Diagnosis for ' + this.patient.Name;
             this.disable = 'disabled';
             this.formType = 'E';
         }
     }
 
-    onChange($event:any) {
+    onChange($event: any) {
         this.diagnosis.Symptoms[$event.model.id] = $event.model._value;
     }
 

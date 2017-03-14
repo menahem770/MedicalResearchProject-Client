@@ -1,4 +1,4 @@
-import { MedicalInstitution } from '../../shared/medicalInstitution';
+import { MedicalInstitution } from '../../shared/models/medicalInstitution';
 export class RegistrationInfo {
     UserId:string
     Username: string;

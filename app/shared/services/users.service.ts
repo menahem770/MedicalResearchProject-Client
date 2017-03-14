@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { CONFIG } from '../config';
-import { User } from '../user';
+import { User } from '../models/user';
 import { LoginInfo } from '../../loginRegistration/shared/loginInfo';
 import { RegistrationInfo } from '../../loginRegistration/shared/registrationInfo';
 import { RecoveryInfo } from '../../loginRegistration/shared/recoveryInfo';
@@ -22,7 +22,7 @@ export class UsersService{
         this.emitChangeSource.next(change);
     }
 
-    constructor(private _http: Http){ }
+    constructor(private _http: Http){}
 
     loginSubmit(logInfo: LoginInfo): Observable<any> {
         let headers: Headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });

@@ -6,7 +6,7 @@ import { RegistrationInfo } from './shared/registrationInfo';
 import { LoginInfo } from './shared/loginInfo';
 import { RecoveryInfo } from './shared/recoveryInfo';
 import { UsersService } from '../shared/services/users.service';
-import { User } from './../shared/user';
+import { User } from '../shared/models/user';
 
 @Component({
     selector: 'mrp-loginRegister',

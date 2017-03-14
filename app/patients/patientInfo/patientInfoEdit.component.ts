@@ -3,13 +3,14 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 import { PatientsService } from '../../shared/services/patients.service';
-import { Patient, Gender, Race } from '../../shared/patient';
+import { Patient, Gender, Race } from '../../shared/models/patient';
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
     selector: 'mrp-patient-edit',
     moduleId: module.id,
-    templateUrl: './patientInfoEdit.component.html'
+    templateUrl: './patientInfoEdit.component.html',
+    styleUrls:['./patientInfoEdit.component.css']
 })
 export class PatientEditInfoComponent implements OnInit,OnDestroy {
     patient: Patient;

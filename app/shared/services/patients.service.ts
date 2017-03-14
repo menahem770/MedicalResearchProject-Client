@@ -3,10 +3,10 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
-import { PatientDiagnosis } from '../../shared/patientDiagnosis';
+import { PatientDiagnosis } from '../models/patientDiagnosis';
 import { FindPatientModel } from '../../patients/findPatient/findPatientModel';
 import { CONFIG } from '../../shared/config';
-import { Patient } from '../../shared/patient';
+import { Patient } from '../models/patient';
 
 @Injectable()
 export class PatientsService{
