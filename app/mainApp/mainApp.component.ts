@@ -6,13 +6,14 @@ import { PatientsFormSchemaService } from './../shared/services/patientsFormSche
 import { PatientsService } from '../shared/services/patients.service';
 import { UsersService } from '../shared/services/users.service';
 import { User } from './../shared/models/user';
+import { CONFIG } from './../shared/config';
 
 @Component({
     selector: 'mrp-main-app',
     moduleId: module.id,
     templateUrl: './mainApp.component.html',
     styleUrls: ['./mainApp.component.css'],
-    providers:[PatientsService,UsersService,PatientsFormSchemaService,EnumToOptionsFilter]
+    providers:[PatientsService,UsersService,PatientsFormSchemaService,EnumToOptionsFilter,CONFIG]
 })
 export class MainAppComponent implements OnInit{
     loggedInUser:User;

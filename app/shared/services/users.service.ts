@@ -13,11 +13,13 @@ import { RecoveryInfo } from '../../loginRegistration/shared/recoveryInfo';
 
 @Injectable()
 export class UsersService{
-    private _url: string = CONFIG.apiUrl+"api/Accounts";
+    private _url: string;
     private emitChangeSource = new BehaviorSubject<User>(null);
     changeEmitted$ = this.emitChangeSource.asObservable();
 
-    constructor(private _http: Http){}
+    constructor(private _http: Http,private config:CONFIG){
+        this._url = this.config.apiUrl+"api/Accounts";
+    }
     
     emitChange(change: User) {
         this.emitChangeSource.next(change);

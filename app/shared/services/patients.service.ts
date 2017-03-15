@@ -10,7 +10,7 @@ import { Patient } from '../models/patient';
 
 @Injectable()
 export class PatientsService{
-    private _url: string = CONFIG.apiUrl+"api/Patients";
+    private _url: string;
     private emitChangeSource = new BehaviorSubject<Patient>(null);
     // Observable string streams
     changeEmitted$ = this.emitChangeSource.asObservable();
@@ -19,7 +19,9 @@ export class PatientsService{
         this.emitChangeSource.next(change);
     }
 
-    constructor(private _http: Http){}
+    constructor(private _http: Http,private config:CONFIG){
+        this._url = this.config.apiUrl+"api/Patients";
+    }
 
     getPatients(findPatientModel:FindPatientModel):Observable<Patient>{
         let accessToken:string = JSON.parse(sessionStorage.getItem('token')).token;
