@@ -4,9 +4,8 @@ import { CanActivate , Router} from '@angular/router';
 @Injectable()
 export class CanActivateOAuthGuard implements CanActivate {
 
-  constructor(public router : Router) {}
+  constructor(public router:Router) {}
   canActivate() {
-
     if(sessionStorage.getItem("token") === null){
       this.router.navigateByUrl('/login');
     }

@@ -43,9 +43,9 @@ export class PatientEditInfoComponent implements OnInit,OnDestroy {
             this.patient.InclusionDate = new Date();
             this.patientService.addPatient(this.patient)
                 .subscribe((res: Response) => {
-                    if(res.status == 201){
-                        this.patientService.emitChange(this.patient[0]);
-                        this.onBack();
+                    if(res.ok){
+                        this.patientService.emitChange(this.patient);
+                        this.router.navigate(['./patientInfo']);
                     }
                     else
                         this.error = "we're sorry, something is wrong with the information you entered!";
@@ -54,10 +54,10 @@ export class PatientEditInfoComponent implements OnInit,OnDestroy {
         else
             this.patientService.editPatient(this.patient)
                 .subscribe((res: Response) => {
-                    if(res.status == 200){
+                    if(res.ok){
                         let patient = new Patient().fromJSON(res.json());
                         this.patientService.emitChange(patient);
-                        this.onBack();
+                        this.router.navigate(['./patientInfo']);
                     }
                     else
                         this.error = "we're sorry, something is wrong with the information you entered!";

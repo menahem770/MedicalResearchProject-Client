@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, Input } from '@angular/core';
 
-import { UsersService } from '../../shared/services/users.service';
 import { Patient } from '../../shared/models/patient';
 import { User } from '../../shared/models/user';
 import { PatientsService } from '../../shared/services/patients.service';
@@ -18,8 +17,7 @@ export class FindPatientComponent{
     pageTitle:string = "Find Patient";
     error:string;
     
-    constructor(private patientsService:PatientsService, private router:Router,private dataService:UsersService){
-        this.dataService.changeEmitted$.subscribe(user => this.loggedInUser = <User>user);
+    constructor(private patientsService:PatientsService, private router:Router){
         this.patient.PatientId = '026606657';
     }
 

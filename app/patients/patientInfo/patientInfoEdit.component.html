@@ -11,7 +11,8 @@
                     <form (ngSubmit)="submit()">
                         <div class="form-group">
                             <label for="id">ID</label>
-                            <input type="tel" class="form-control" id="id" [(ngModel)]="patient.PatientId" (ngModelChange)="patient.PatientId = $event" name="id" required minlength="9" maxlength="9" [readonly]="isFieldDisabled">
+                            <input type="tel" class="form-control" id="id" #id='ngModel' [(ngModel)]="patient.PatientId" (ngModelChange)="patient.PatientId = $event" name="id" required minlength="9" maxlength="9" [readonly]="isFieldDisabled">
+                            <span class='help-block'  *ngIf='(id.touched || id.dirty) && id.errors'>Please enter your ID, at least 9 digits in length</span>
                         </div>
                         <div class="form-group">
                             <label for="name">Name</label>

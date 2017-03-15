@@ -1,8 +1,9 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { EnumToOptionsFilter } from './../shared/components/enumToOptionsFilter.pipe';
 import { PatientsFormSchemaService } from './../shared/services/patientsFormSchema.service';
 import { PatientsService } from '../shared/services/patients.service';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UsersService } from '../shared/services/users.service';
 import { User } from './../shared/models/user';
 
@@ -21,26 +22,23 @@ export class MainAppComponent implements OnInit{
 
     constructor(private router:Router,private usersService:UsersService){
         this.usersService.changeEmitted$.subscribe(user => this.login(user));
-        
     }
     ngOnInit():void{
-        if(!this.loggedInUser && sessionStorage.getItem("token")){
-            let un = JSON.parse(sessionStorage.getItem('token')).username;
-            this.usersService.getLoggedUser(un)
-                .subscribe(res => this.usersService.emitChange(new User().fromJSON(res)), 
-                (error:any) => this.logout());
+        let isLogin = this.router.url.includes('login') || this.router.url === '/';
+        if(!this.loggedInUser && sessionStorage.getItem("token") && !isLogin){
+            this.usersService.getLoggedUser().subscribe(r => r,(error:any) => this.logout(1));
         }
     }
     login(user:User):void{
         if(user){
             this.loggedIn = true;
             this.loggedInUser = user;
-            this.loginTitle = 'hello '+user.UserName;
+            this.loginTitle = 'hello '+user.FullName;
         }
     }
-    logout():void{
+    logout(id:number):void{
         this.loggedIn = false;
         this.usersService.logout();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/logout/'+(id||'0')]);
     }
 }

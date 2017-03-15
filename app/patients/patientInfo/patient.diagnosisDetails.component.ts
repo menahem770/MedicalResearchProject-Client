@@ -10,7 +10,6 @@ import {
     DynamicInputModel
 } from "@ng2-dynamic-forms/core";
 
-import { UsersService } from './../../shared/services/users.service';
 import { PatientsFormSchemaService } from './../../shared/services/patientsFormSchema.service';
 import { PatientsService } from '../../shared/services/patients.service';
 import { Patient } from '../../shared/models/patient';
@@ -40,7 +39,7 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
         private route: ActivatedRoute,
         private patientsService: PatientsService,
         private formsSchemaService: PatientsFormSchemaService,
-        private formsService: DynamicFormService) { }
+        private formsService: DynamicFormService){}
 
     ngOnInit(): void {
         this.formsSchemaService.GetFirstSchema().subscribe(res => {
