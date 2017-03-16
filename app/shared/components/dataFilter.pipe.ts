@@ -7,7 +7,7 @@ export class DataFilterPipe implements PipeTransform {
 
     transform(array: any[], query: string): any {
         if (query) {
-            return _.filter(array, (row:any)=>row.name.indexOf(query) > -1);
+            return array.filter((row:any)=>row.name.indexOf(query) > -1);
         }
         return array;
     }

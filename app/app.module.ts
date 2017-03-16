@@ -16,8 +16,8 @@ import { EnumToOptionsFilter } from './shared/components/enumToOptionsFilter.pip
 import { EqualValidator } from './loginRegistration/shared/equalValidator.directive';
 import { PatientInfoComponent } from './patients/patientInfo/patientInfo.component';
 import { PatientEditInfoComponent } from './patients/patientInfo/patientInfoEdit.component';
-import { TabComponent } from './shared/tabs/tab.component';
-import { TabsComponent } from './shared/tabs/tabs.component';
+import { TabComponent } from './shared/components/tabs/tab.component';
+import { TabsComponent } from './shared/components/tabs/tabs.component';
 import { PatientDiagnosisDetailsComponent } from './patients/patientInfo/patient.diagnosisDetails.component';
 import { FindPatientComponent } from './patients/findPatient/findPatient.component';
 import { CanActivateOAuthGuard } from './shared/services/canActivateOAuthGuard';

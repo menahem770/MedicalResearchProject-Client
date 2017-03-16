@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { EnumToOptionsFilter } from './../shared/components/enumToOptionsFilter.pipe';
-import { PatientsFormSchemaService } from './../shared/services/patientsFormSchema.service';
+import { EnumToOptionsFilter } from '../shared/components/enumToOptionsFilter.pipe';
+import { PatientsFormSchemaService } from '../shared/services/patientsFormSchema.service';
 import { PatientsService } from '../shared/services/patients.service';
 import { UsersService } from '../shared/services/users.service';
-import { User } from './../shared/models/user';
-import { CONFIG } from './../shared/config';
+import { User } from '../shared/models/user';
+import { CONFIG } from '../shared/config';
 
 @Component({
     selector: 'mrp-main-app',

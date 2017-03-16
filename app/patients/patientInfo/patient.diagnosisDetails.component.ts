@@ -2,13 +2,7 @@ import { Response } from '@angular/http';
 import { FormArray, FormGroup, FormControl } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {
-    DynamicFormService,
-    DynamicFormControlModel,
-    DynamicFormGroupModel,
-    DynamicFormArrayModel,
-    DynamicInputModel
-} from "@ng2-dynamic-forms/core";
+import {DynamicFormService, DynamicFormControlModel, DynamicFormGroupModel, DynamicFormArrayModel, DynamicInputModel} from "@ng2-dynamic-forms/core";
 
 import { PatientsFormSchemaService } from './../../shared/services/patientsFormSchema.service';
 import { PatientsService } from '../../shared/services/patients.service';
@@ -60,10 +54,10 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
     submit(): void {
         if (this.formType == 'E') {
             this.patientsService.editDiagnosis(this.diagnosis).subscribe((res: Response) => {
-                if (res.status == 200) {
+                if (res.ok) {
                     let patient = new Patient().fromJSON(res.json());
                     this.patientsService.emitChange(patient);
-                    this.goBack();
+                    this.onSuccessfulSave();
                 }
                 else
                     this.error = "we're sorry, something is wrong with the information you entered!";
@@ -72,13 +66,14 @@ export class PatientDiagnosisDetailsComponent implements OnInit {
         else {
             this.diagnosis.Id = this.patient.Diagnosis.length;
             this.patient.Diagnosis.push(this.diagnosis);
-            this.patientsService.addDiagnosis(this.diagnosis).subscribe((res: any) => {
-                (<Response>res).status == 201 ? this.goBack() : "we're sorry, something is wrong with the information you entered!";
+            this.patientsService.addDiagnosis(this.diagnosis).subscribe((res: Response) => {
+                res.ok ? this.onSuccessfulSave() : this.error = "we're sorry, something is wrong with the information you entered!";
             }, (error: any) => this.error = "server error!");
         }
     }
 
-    goBack(): void {
+    onSuccessfulSave(): void {
+        this.formGroup.reset();
         this.router.navigate(['./patientInfo']);
     }
 
